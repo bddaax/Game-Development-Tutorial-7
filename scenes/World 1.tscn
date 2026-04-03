@@ -1,0 +1,163 @@
+[gd_scene format=3 uid="uid://dltqory4o1xju"]
+
+[ext_resource type="PackedScene" path="res://scenes/ObjLamp.tscn" id="lamp_1"]
+[ext_resource type="PackedScene" path="res://scenes/AreaTrigger.tscn" id="trigger_1"]
+[ext_resource type="Script" path="res://scenes/Interactable.gd" id="interactable_1"]
+[ext_resource type="Script" path="res://scenes/Switch.gd" id="switch_1"]
+
+[sub_resource type="StandardMaterial3D" id="mat_walls"]
+albedo_color = Color(0.13, 0.15, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_stone"]
+albedo_color = Color(0.72, 0.38, 0.12, 1)
+metallic = 0.2
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="mat_pillar"]
+albedo_color = Color(0.16, 0.2, 0.28, 1)
+metallic = 0.4
+
+[sub_resource type="StandardMaterial3D" id="mat_goal"]
+albedo_color = Color(0.1, 0.5, 0.25, 1)
+emission_enabled = true
+emission = Color(0.1, 0.8, 0.3, 1)
+emission_energy_multiplier = 0.4
+
+[sub_resource type="StandardMaterial3D" id="mat_switch"]
+albedo_color = Color(0.85, 0.15, 0.1, 1)
+emission_enabled = true
+emission = Color(0.9, 0.2, 0.1, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="BoxMesh" id="switch_mesh"]
+size = Vector3(0.4, 0.4, 0.15)
+material = SubResource("mat_switch")
+
+[sub_resource type="BoxShape3D" id="switch_col"]
+size = Vector3(0.4, 0.4, 0.15)
+
+[node name="World 1" type="Node3D" unique_id=297050075]
+
+[node name="LevelGeometry" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="Room" type="CSGBox3D" parent="LevelGeometry" unique_id=352165904]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -10)
+flip_faces = true
+size = Vector3(30, 8, 50)
+material = SubResource("mat_walls")
+
+[node name="GapCutter" type="CSGBox3D" parent="LevelGeometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
+operation = 2
+size = Vector3(32, 4, 7)
+
+[node name="Stone1" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.3, -16.5)
+use_collision = true
+size = Vector3(3.5, 0.6, 2.5)
+material = SubResource("mat_stone")
+
+[node name="Stone2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.3, -19.5)
+use_collision = true
+size = Vector3(3.5, 0.6, 2.5)
+material = SubResource("mat_stone")
+
+[node name="Pillar1" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3, 5)
+use_collision = true
+size = Vector3(2, 6, 2)
+material = SubResource("mat_pillar")
+
+[node name="Pillar2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 3, 5)
+use_collision = true
+size = Vector3(2, 6, 2)
+material = SubResource("mat_pillar")
+
+[node name="Pillar3" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3, -28)
+use_collision = true
+size = Vector3(2, 6, 2)
+material = SubResource("mat_pillar")
+
+[node name="Pillar4" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 3, -28)
+use_collision = true
+size = Vector3(2, 6, 2)
+material = SubResource("mat_pillar")
+
+[node name="GoalPlatform" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -30)
+use_collision = true
+size = Vector3(6, 0.5, 6)
+material = SubResource("mat_goal")
+
+[node name="Lamp1" parent="." instance=ExtResource("lamp_1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
+
+[node name="Lamp2" parent="." instance=ExtResource("lamp_1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 10)
+
+[node name="Lamp3" parent="." instance=ExtResource("lamp_1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -28)
+
+[node name="Lamp4" parent="." instance=ExtResource("lamp_1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -28)
+
+[node name="MainLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 5)
+light_color = Color(0.35, 0.85, 0.95, 1)
+light_energy = 10.0
+omni_range = 22.0
+
+[node name="SwitchableLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+light_color = Color(1.0, 0.9, 0.7, 1)
+light_energy = 6.0
+omni_range = 15.0
+
+[node name="GapLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -18)
+light_color = Color(1.0, 0.5, 0.2, 1)
+light_energy = 6.0
+omni_range = 15.0
+
+[node name="GoalLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, -30)
+light_color = Color(0.3, 0.55, 1.0, 1)
+light_energy = 8.0
+omni_range = 20.0
+
+[node name="AccentLight1" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 2, 5)
+light_color = Color(0.0, 1.0, 0.7, 1)
+light_energy = 2.5
+omni_range = 6.0
+
+[node name="AccentLight2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 2, 5)
+light_color = Color(1.0, 0.3, 0.6, 1)
+light_energy = 2.5
+omni_range = 6.0
+
+[node name="SwitchMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.5, 5)
+mesh = SubResource("switch_mesh")
+script = ExtResource("interactable_1")
+
+[node name="SwitchBody" type="StaticBody3D" parent="SwitchMesh"]
+script = ExtResource("switch_1")
+light = NodePath("../../SwitchableLight")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwitchMesh/SwitchBody"]
+shape = SubResource("switch_col")
+
+[node name="GoalZone" parent="." instance=ExtResource("trigger_1")]
+transform = Transform3D(5, 0, 0, 0, 3, 0, 0, 0, 5, 0, 2, -30)
+sceneName = "Win Screen"
+
+[node name="DeathZone" parent="." instance=ExtResource("trigger_1")]
+transform = Transform3D(16, 0, 0, 0, 2, 0, 0, 0, 8, 0, -6, -18)
+sceneName = "Level 1"
