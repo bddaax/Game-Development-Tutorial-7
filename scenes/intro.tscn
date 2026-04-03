@@ -1,0 +1,83 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://scenes/script/intro.gd" id="1_intro"]
+
+[node name="Intro" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_intro")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.07, 0.06, 0.05, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Card" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(520, 0)
+
+[node name="Margin" type="MarginContainer" parent="CenterContainer/Card"]
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/Card/Margin"]
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="CenterContainer/Card/Margin/VBox"]
+text = "Keperluan Masak Hari Ini"
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+
+[node name="Divider" type="HSeparator" parent="CenterContainer/Card/Margin/VBox"]
+
+[node name="Desc" type="Label" parent="CenterContainer/Card/Margin/VBox"]
+text = "Kumpulkan semua peralatan dapur yang tersebar di dalam ruangan!"
+autowrap_mode = 3
+horizontal_alignment = 1
+
+[node name="Gap" type="Control" parent="CenterContainer/Card/Margin/VBox"]
+custom_minimum_size = Vector2(0, 4)
+
+[node name="ItemTitle" type="Label" parent="CenterContainer/Card/Margin/VBox"]
+text = "Daftar Barang:"
+theme_override_font_sizes/font_size = 15
+
+[node name="Items" type="Label" parent="CenterContainer/Card/Margin/VBox"]
+text = "  Pisau
+  Spatula  x2
+  Panci Masak  x2
+  Sumpit
+  Peralatan Masak"
+theme_override_font_sizes/font_size = 14
+
+[node name="Gap2" type="Control" parent="CenterContainer/Card/Margin/VBox"]
+custom_minimum_size = Vector2(0, 8)
+
+[node name="Divider2" type="HSeparator" parent="CenterContainer/Card/Margin/VBox"]
+
+[node name="Controls" type="Label" parent="CenterContainer/Card/Margin/VBox"]
+text = "WASD gerak   |   Mouse lihat   |   E ambil   |   1/2/3 pilih slot   |   Q drop"
+autowrap_mode = 3
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 11
+
+[node name="Gap3" type="Control" parent="CenterContainer/Card/Margin/VBox"]
+custom_minimum_size = Vector2(0, 8)
+
+[node name="StartButton" type="Button" parent="CenterContainer/Card/Margin/VBox"]
+text = "Mulai Memasak!"
+custom_minimum_size = Vector2(0, 48)
+theme_override_font_sizes/font_size = 16
+
+[connection signal="pressed" from="CenterContainer/Card/Margin/VBox/StartButton" to="." method="_on_mulai_pressed"]
